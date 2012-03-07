@@ -17,7 +17,7 @@ if(empty($_SESSION['frequest_token_secret'])) {
     //get the request token and store it
     $request_token_info = $oauthc->getRequestToken($oauth['flickr']['requesttokenurl']); //get request token
     $_SESSION['frequest_token_secret'] = $request_token_info['oauth_token_secret'];
-    header("Location: {$oauth['flickr']['authurl']}?oauth_token=".$request_token_info['oauth_token']);//forward user to authorize url
+    header("Location: {$oauth['flickr']['authurl']}?oauth_token=".$request_token_info['oauth_token']."&perms=read");//forward user to authorize url
 }
 else if(empty($_SESSION['faccess_oauth_token'])) {
     //get the access token - dont forget to save it 
