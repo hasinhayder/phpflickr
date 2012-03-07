@@ -6,9 +6,9 @@
 session_start();
 include_once("config.php");
 /*
-unset($_SESSION['trequest_token_secret']);
-unset($_SESSION['taccess_oauth_token']);
-unset($_SESSION['taccess_oauth_token_secret']);
+unset($_SESSION['frequest_token_secret']);
+unset($_SESSION['faccess_oauth_token']);
+unset($_SESSION['faccess_oauth_token_secret']);
  */
 $oauthc = new OAuth($oauth['flickr']['consumerkey'],
         $oauth['flickr']['consumersecret'],
@@ -23,6 +23,7 @@ else if(empty($_SESSION['faccess_oauth_token'])) {
     //get the access token - dont forget to save it 
     $request_token_secret = $_SESSION['frequest_token_secret'];
     $oauthc->setToken($_REQUEST['oauth_token'],$request_token_secret);//user allowed the app, so u
+    $oauthc->addRequiredParameter(array("perms"=>"read"));
     $access_token_info = $oauthc->getAccessToken($oauth['flickr']['accesstokenurl']);
     $_SESSION['faccess_oauth_token']= $access_token_info['oauth_token'];
     $_SESSION['faccess_oauth_token_secret']= $access_token_info['oauth_token_secret'];
