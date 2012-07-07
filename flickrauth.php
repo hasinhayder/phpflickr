@@ -4,6 +4,7 @@
  * Released under MIT License
  * @date: April 18, 2012
  */
+
 class FlickrAuth
 {
     private $dataStore;
@@ -96,12 +97,13 @@ class FlickrAuth
         $signature = $this->requestSigner->getSignature($this->dataStore);
         $requestUrl = $endpoint . "?" . $this->dataStore->getQueryString() . $signature;
         $data = HTTPRequest::process($requestUrl);
-        parse_str($data);
-        return array("fullname" => $fullname,
-            "oauth_token" => $oauth_token,
-            "oauth_token_secret" => $oauth_token_secret,
-            "user_nsid" => $user_nsid,
-            "username" => $username
+        $pdata = array();
+        parse_str($data, $pdata);
+        return array("fullname" => $pdata['fullname'],
+            "oauth_token" => $pdata['oauth_token'],
+            "oauth_token_secret" => $pdata['oauth_token_secret'],
+            "user_nsid" => $pdata['user_nsid'],
+            "username" => $pdata['username']
         );
     }
 
@@ -113,10 +115,11 @@ class FlickrAuth
         $signature = $this->requestSigner->getSignature($this->dataStore);
         $requestUrl = $endpoint . "?" . $this->dataStore->getQueryString() . $signature;
         $data = HTTPRequest::process($requestUrl);
-        parse_str($data);
-        return array("oauth_callback_confirmed" => $oauth_callback_confirmed,
-            "oauth_token" => $oauth_token,
-            "oauth_token_secret" => $oauth_token_secret
+        $pdata = array();
+        parse_str($data, $pdata);
+        return array("oauth_callback_confirmed" => $pdata['oauth_callback_confirmed'],
+            "oauth_token" => $pdata['oauth_token'],
+            "oauth_token_secret" => $pdata['oauth_token_secret']
         );
         return $dataArray;
     }
@@ -134,5 +137,5 @@ class FlickrAuth
             return true;
         return false;
     }
-}
+};
 ?>
