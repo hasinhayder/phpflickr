@@ -3,6 +3,7 @@
  * FlickrLib by Hasin Hayder, hasin@leevio.com
  * Released under MIT License
  * @date: April 18, 2012
+ * @modification: July 9, 2012
  */
 
 class FlickrAuth
@@ -76,24 +77,6 @@ class FlickrAuth
             }
         }
     }
-
-    private function testcall()
-    {
-        echo "Test Call<br/>";
-        $this->dataStore->setParams(array("oauth_token" => $this->oAuthToken,
-            "format" => "json",
-            "method"=>"flickr.test.login",
-            "nojsoncallback"=>"1"
-        ));
-        $endpoint = "http://api.flickr.com/services/rest";
-        $this->dataStore->setEndpoint($endpoint);
-
-        $signature = $this->requestSigner->getSignature($this->dataStore);
-        $requestUrl = $endpoint . "?" . $this->dataStore->getQueryString() . $signature;
-        $data = HTTPRequest::process($requestUrl);
-        echo $data;
-    }
-
     private function getAccessToken()
     {
         $this->dataStore->setParams(array("oauth_token" => $this->oAuthToken,
