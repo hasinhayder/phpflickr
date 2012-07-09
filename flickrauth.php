@@ -42,10 +42,10 @@ class FlickrAuth
 
     function authenticate($forced = false)
     {
-        if($this->isLoggedIn() && !$forced){
+        /*if($this->isLoggedIn() && !$forced){
             $cb = urldecode($this->dataStore->getSecondaryCallback());
             header("location: {$cb}");
-        }
+        }*/
         if ($_SESSION['oauth_token_secret'] && $_SESSION['oauth_token']) {
             $this->oAuthToken=$_SESSION['oauth_token'];
             $this->oAuthTokenSecret = $_SESSION['oauth_token_secret'];
