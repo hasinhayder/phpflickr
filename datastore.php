@@ -13,6 +13,7 @@ class DataStore
     private $method;
     private $endpoint;
     private $permission;
+    private $redirectto;
 
     public function setKey($data)
     {
@@ -44,14 +45,24 @@ class DataStore
         return $this->token;
     }
 
-    public function setCallback($data)
+    public function setPrimaryCallback($data)
     {
         $this->params['oauth_callback'] = urlencode($data);
     }
 
-    public function getCallback()
+    public function getPrimaryCallback()
     {
         return $this->params['oauth_callback'];
+    }
+
+    public function setSecondaryCallback($data)
+    {
+        $this->redirectto = urlencode($data);
+    }
+
+    public function getSecondaryCallback()
+    {
+        return $this->redirectto;
     }
 
 
@@ -62,7 +73,7 @@ class DataStore
 
     public function unsetParams($data)
     {
-        foreach($data as $key=>$val){
+        foreach ($data as $key => $val) {
             unset($this->params[$key]);
         }
     }

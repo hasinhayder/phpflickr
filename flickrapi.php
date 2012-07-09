@@ -35,7 +35,7 @@ class FlickrApi
         $requestUrl = $endpoint . "?" . $this->dataStore->getQueryString() . $signature;
         $data = HTTPRequest::process($requestUrl);
 
-        $this->datastore->unsetParams($params);
+        $this->dataStore->unsetParams($params);
         return $data;
     }
 }

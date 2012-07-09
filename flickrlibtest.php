@@ -15,7 +15,8 @@ include_once("datastore.php");
 
 $fl = new FlickrLib("8cc0f91339ab3da808b215c72a3d564d", //key
     "54414ae0140a3903", //secret
-    "http://flickr.tekzon.net/flickruserdata.php", //where it will be redirected after successful login
+    "http://grasshopper.me/f2/flickruserdata.php", //where it will be redirected after successful login
     "read" //permission
 );
+$fl->auth->authenticate();
 ?>

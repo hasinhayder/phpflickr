@@ -18,7 +18,7 @@ class FlickrLib{
                          $userAuthUrl="http://www.flickr.com/services/oauth/authorize",
                          $accessTokenUrl="http://www.flickr.com/services/oauth/access_token"){
         $this->dataStore = ObjectBroker::getDataStore();
-        $this->dataStore->setCallback($callback);
+        $this->dataStore->setPrimaryCallback($callback);
         $this->auth = new FlickrAuth($key,
                     $secret,
                     $callback,$permissions,

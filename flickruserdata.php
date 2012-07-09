@@ -15,7 +15,5 @@ include_once("datastore.php");
 if($fl->auth->isLoggedIn()){
     echo "Logged in<br/>";
     echo "Signed API Response: ". $fl->api->testlogin();
-}else{
-    $fl->auth->authenticate();
 }
 ?>

@@ -30,7 +30,8 @@ class FlickrAuth
         $this->dataStore = ObjectBroker::getDataStore();
         $this->dataStore->setKey($key);
         $this->dataStore->setSecret($secret);
-        $this->dataStore->setCallback($callback);
+        $this->dataStore->setPrimaryCallback('http'.(empty($_SERVER['HTTPS'])?'':'s').'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
+        $this->dataStore->setSecondaryCallback($callback);
         $this->dataStore->setPermission($perms);
         $this->requestSigner = ObjectBroker::getRequestSigner();
 
@@ -39,8 +40,12 @@ class FlickrAuth
         $this->accessTokenUrl = $accessTokenUrl;
     }
 
-    function authenticate($forced = true)
+    function authenticate($forced = false)
     {
+        if($this->isLoggedIn() && !$forced){
+            $cb = urldecode($this->dataStore->getSecondaryCallback());
+            header("location: {$cb}");
+        }
         if ($_SESSION['oauth_token_secret'] && $_SESSION['oauth_token']) {
             $this->oAuthToken=$_SESSION['oauth_token'];
             $this->oAuthTokenSecret = $_SESSION['oauth_token_secret'];
@@ -66,6 +71,8 @@ class FlickrAuth
                 $_SESSION['oauth_token'] = $token['oauth_token'];
                 $_SESSION['oauth_token_secret'] = $token['oauth_token_secret'];
                 $this->dataStore->setToken($token['oauth_token_secret']);
+                $cb = urldecode($this->dataStore->getSecondaryCallback());
+                header("location: {$cb}");
             }
         }
     }
